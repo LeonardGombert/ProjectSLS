@@ -7,9 +7,9 @@ public class PlayerMovement : MonoBehaviour
 {
     CharacterController controller;
     Transform playerModel;
-    [SerializeField] float speed = 12f;
-    float gravity = -9.81f;
-    [SerializeField] float jumpHeight = 3f;
+    [SerializeField] float speed;
+    [SerializeField] float gravity;
+    [SerializeField] float jumpHeight;
     [SerializeField] Vector3 currentVelocity;
 
     [SerializeField] Transform groundCheck;
@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] bool isGrounded;
 
 
-    //TWEEN VARIABLES
+    //SLOW TIME TWEEN VARIABLES
     float time;
     float change;
     float startValue;
@@ -33,6 +33,15 @@ public class PlayerMovement : MonoBehaviour
 
     //RUNNING
     bool isRunning;
+
+    //ROCKET SLIDE
+    bool isSliding;
+    float rsTime;
+    Vector3 rsChange;
+    Vector3 rsStartPosition;
+    Vector3 rsTargetPosition;
+    [SerializeField] float rsTweenDuration;
+    [SerializeField] float rsSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -86,10 +95,10 @@ public class PlayerMovement : MonoBehaviour
             targetValue = 1;
             change = targetValue - startValue;
 
-            if (time <= tweenDuration)
+            if (time <= tweenDuration/2)
             {
                 time += Time.deltaTime;
-                Time.timeScale = TweenManager.EaseInQuad(time, startValue, change, tweenDuration);
+                Time.timeScale = TweenManager.EaseInQuad(time, startValue, change, tweenDuration/2);
             }
         }
     }
@@ -102,19 +111,42 @@ public class PlayerMovement : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftControl))
             {
-                playerModel.localScale = new Vector3(1, .5f, 1);
-                controller.Move(currentVelocity * 2 * Time.deltaTime);
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftControl))
-            {
-                playerModel.localScale = new Vector3(1, 1, 1);
+                isSliding = true;
+                rsStartPosition = transform.position;
+                rsTargetPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z * rsSpeed);
             }
         }
+
+        if (Input.GetKeyUp(KeyCode.LeftControl)) isSliding = false;
 
         if (!isRunning)
         {
             speed = 12f;
+        }
+
+        if(isSliding)
+        {
+            playerModel.localScale = new Vector3(1, .5f, 1);
+            //controller.Move(currentVelocity * 2 * Time.deltaTime);
+
+            rsChange = rsTargetPosition - rsStartPosition;
+
+            if (rsTime <= rsTweenDuration)
+            {
+                rsTime += Time.deltaTime;
+                transform.position = new Vector3(transform.position.x, transform.position.y, TweenManager.EaseOutQuad(rsTime, rsStartPosition.z, rsChange.z, rsTweenDuration));
+            }
+
+            if (rsTime >= rsTweenDuration)
+            {
+                rsTime = 0f;
+                isSliding = false;
+            }
+        }
+
+        if(!isSliding)
+        {
+            playerModel.localScale = new Vector3(1, 1, 1);
         }
     }
 

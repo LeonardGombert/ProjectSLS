@@ -94,8 +94,8 @@ MonoBehaviour:
     y: 285
     width: 410
     height: 245
-  m_MinSize: {x: 102, y: 122}
-  m_MaxSize: {x: 4002, y: 4022}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -122,8 +122,8 @@ MonoBehaviour:
     y: 0
     width: 410
     height: 530
-  m_MinSize: {x: 145, y: 173}
-  m_MaxSize: {x: 4002, y: 8044}
+  m_MinSize: {x: 145, y: 151}
+  m_MaxSize: {x: 4002, y: 8022}
   vertical: 1
   controlID: 258
 --- !u!114 &6
@@ -227,7 +227,7 @@ MonoBehaviour:
     width: 2560
     height: 530
   m_MinSize: {x: 451, y: 222}
-  m_MaxSize: {x: 12008, y: 8044}
+  m_MaxSize: {x: 12008, y: 8022}
   vertical: 0
   controlID: 257
 --- !u!114 &10
@@ -251,7 +251,7 @@ MonoBehaviour:
     width: 2560
     height: 1307
   m_MinSize: {x: 917, y: 494}
-  m_MaxSize: {x: 22012, y: 18066}
+  m_MaxSize: {x: 22012, y: 18044}
   vertical: 0
   controlID: 255
 --- !u!114 &11
@@ -369,7 +369,7 @@ MonoBehaviour:
     width: 2560
     height: 1307
   m_MinSize: {x: 917, y: 494}
-  m_MaxSize: {x: 22012, y: 18066}
+  m_MaxSize: {x: 22012, y: 18044}
   vertical: 1
   controlID: 256
 --- !u!114 &16
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_StartGridSize: 16
   m_LastFolders: []
   m_LastFoldersGridSize: 16
-  m_LastProjectPath: D:\_gameDev\_GITKRAKEN\Project_SLS\Project_SLS
+  m_LastProjectPath: D:\_gameDev\_GITKRAKEN\ProjectSLS\Project_SLS
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
@@ -704,23 +704,23 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 38fbffff
-      m_LastClickedID: -1224
-      m_ExpandedIDs: 68fbffff
+      m_SelectedIDs: 243c0000
+      m_LastClickedID: 15396
+      m_ExpandedIDs: 68fbffff243c0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
-        m_Name: 
-        m_OriginalName: 
+        m_Name: Plane
+        m_OriginalName: Plane
         m_EditFieldRect:
           serializedVersion: 2
           x: 0
           y: 0
           width: 0
           height: 0
-        m_UserData: 0
+        m_UserData: 15370
         m_IsWaitingForDelay: 0
         m_IsRenaming: 0
-        m_OriginalEventType: 11
+        m_OriginalEventType: 0
         m_IsRenamingFilename: 0
         m_ClientGUIView: {fileID: 2}
       m_SearchString: 
@@ -797,13 +797,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.098573245, y: 0.8688699, z: -0.19230115, w: -0.44540766}
+    m_Target: {x: -0.23224975, y: -0.32719955, z: 0.083302855, w: -0.91218424}
     speed: 2
-    m_Value: {x: -0.09857229, y: 0.8688615, z: -0.19229929, w: -0.44540337}
+    m_Value: {x: -0.23224756, y: -0.32719648, z: 0.08330207, w: -0.91217566}
   m_Size:
-    m_Target: 10.971097
+    m_Target: 93.95457
     speed: 2
-    m_Value: 10.971097
+    m_Value: 93.95457
   m_Ortho:
     m_Target: 0
     speed: 2
