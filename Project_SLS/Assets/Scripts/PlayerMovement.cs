@@ -43,21 +43,62 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float rsTweenDuration;
     [SerializeField] float rsSpeed;
 
+
+    //JUMPING
+    Rigidbody rb;
+    [SerializeField][Range(1, 20)] float jumpVelocity = 300f;
+    [SerializeField] float fallMultiplier = 2.5f;
+    [SerializeField] float lowJumpMultiplier = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
         playerModel = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        Jump();
         BasicMovement();
         SlowDownTime();
         RocketSliding();
     }
-    
+
+    void BasicMovement()
+    {
+        //check if player is on ground by casting an insible sphere around a point and seeing if it collides with anything
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
+        //if (isGrounded && currentVelocity.y < 0f) currentVelocity.y = -2f;
+
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        //takes movement relattive to the player and mutiply it by the current input (1 or -1)
+        Vector3 movement = transform.right * x + transform.forward * z;
+
+        //multiplying by time.deltaTime makes it framerate (update) independent
+        controller.Move(movement * speed * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)) isRunning = true;
+        if (Input.GetKeyUp(KeyCode.LeftShift)) isRunning = false;
+
+        //add gravity pull to the y axis   
+        //currentVelocity.y += gravity * Time.deltaTime;
+        //controller.Move(currentVelocity * Time.deltaTime);
+    }
+
+    private void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) rb.velocity = Vector3.up * jumpVelocity;
+
+        if(rb.velocity.y < 0) rb.velocity += Vector3.up * Physics.gravity.y * (fallMultiplier - 1) * Time.deltaTime;
+        else if (rb.velocity.y > 0 && Input.GetKey(KeyCode.Space)) rb.velocity += Vector3.up * Physics.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime; 
+    }
+
     void SlowDownTime()
     {
         //slow down time, develop lerp algo
@@ -150,29 +191,4 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void BasicMovement()
-    {
-        //check if player is on ground by casting an insible sphere around a point and seeing if it collides with anything
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
-        if (isGrounded && currentVelocity.y < 0f) currentVelocity.y = -2f;
-
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        //takes movement relattive to the player and mutiply it by the current input (1 or -1)
-        Vector3 movement = transform.right * x + transform.forward * z;
-
-        //multiplying by time.deltaTime makes it framerate (update) independent
-        controller.Move(movement * speed * Time.deltaTime);
-
-        if (Input.GetButtonDown("Jump") && isGrounded) currentVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)) isRunning = true;
-        if (Input.GetKeyUp(KeyCode.LeftShift)) isRunning = false;
-
-        //add gravity pull to the y axis    
-        currentVelocity.y += gravity * Time.deltaTime;
-        controller.Move(currentVelocity * Time.deltaTime);
-    }
 }
